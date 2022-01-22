@@ -75,3 +75,15 @@ func exit(msg string) {
 	fmt.Println(msg)
 	os.Exit(1)
 }
+
+// Open and Read csv file
+// f, err := os.Open("data.csv")
+// if err != nil {
+// 	log.Fatal(err)
+// }
+
+// defer f.Close()
+
+// csvReader := csv.NewReader(f)
+// lines, err := csvReader.Read()
+// lines contains all lines of csv file
