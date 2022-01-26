@@ -19,20 +19,42 @@ func Parse(r io.Reader) ([]Link, error) {
 	if err != nil {
 		return nil, err
 	}
+	nodes := linkNodes(doc)
+	for _, node := range nodes {
+		fmt.Println(node)
+	}
 
-	dfs(doc, "")
+	// dfs(doc, "")
+
 	return nil, nil
 }
 
-// Depth First Search through all nodes of html doc
-func dfs(n *html.Node, padding string) {
-	msg := n.Data
-	if n.Type == html.ElementNode {
-		msg = "<" + msg + ">"
+// DFS, find all a tag nodes for their links
+func linkNodes(n *html.Node) []*html.Node {
+	if n.Type == html.ElementNode && n.Data == "a" {
+		return []*html.Node{n}
 	}
-	fmt.Println(padding, msg)
-	// c = n's first child, if c is not nil continue to next sibling
+	var ret []*html.Node
+
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		dfs(c, padding+"  ")
+
+		ret = append(ret, linkNodes(c)...)
 	}
+	return ret
 }
+
+// Depth First Search through all nodes of html doc
+// func dfs(n *html.Node, padding string) {
+
+// 	msg := n.Data
+// 	// If html element, add correct brackets
+// 	if n.Type == html.ElementNode {
+// 		msg = "<" + msg + ">"
+// 	}
+// 	fmt.Println(padding, msg)
+
+// 	// c = n's first child, if c is not nil continue to next sibling
+// 	for c := n.FirstChild; c != nil; c = c.NextSibling {
+// 		dfs(c, padding+"  ")
+// 	}
+// }
