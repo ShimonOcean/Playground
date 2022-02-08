@@ -42,8 +42,26 @@ func buildLink(n *html.Node) Link {
 		}
 	}
 	// Want the text for return
-	ret.Text = "Parse the text here"
+	ret.Text = text(n)
 
+	return ret
+}
+
+// Return string representing all text inside a node, ignoring comments
+func text(n *html.Node) string {
+	if n.Type == html.TextNode {
+		return n.Data
+	}
+	// If node is a i.e. comment, doctype node
+	if n.Type != html.ElementNode {
+		return ""
+	}
+
+	// For every child, retrieve its text
+	var ret string
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		ret += text(c) + " "
+	}
 	return ret
 }
 
