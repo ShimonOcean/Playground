@@ -20,13 +20,31 @@ func Parse(r io.Reader) ([]Link, error) {
 		return nil, err
 	}
 	nodes := linkNodes(doc)
+	var links []Link
+
 	for _, node := range nodes {
+		link = append(links, buildLink(node))
 		fmt.Println(node)
 	}
 
 	// dfs(doc, "")
 
-	return nil, nil
+	return links, nil
+}
+
+func buildLink(n *html.Node) Link {
+	var ret Link
+	// n.Attr is a slice, need to iterate over every element
+	for _, attr := range n.Attr {
+		if attr.Key == "href" {
+			ret.Href = attr.Val
+			break
+		}
+	}
+	// Want the text for return
+	ret.Text = "Parse the text here"
+
+	return ret
 }
 
 // DFS, find all a tag nodes for their links
