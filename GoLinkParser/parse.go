@@ -3,6 +3,7 @@ package link
 import (
 	"fmt"
 	"io"
+	"strings"
 
 	"golang.org/x/net/html"
 )
@@ -76,6 +77,8 @@ func linkNodes(n *html.Node) []*html.Node {
 
 		ret = append(ret, linkNodes(c)...)
 	}
+	// Fields; split string by variable whitespace chars
+	return strings.Join(strings.Fields(ret), " ")
 	return ret
 }
 
