@@ -3,7 +3,21 @@ package main
 import (
 	"bytes"
 	"regexp"
+
+	_ "github.com/lib/pq"
 )
+
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "shimon"
+	password = "your-passwd"
+	dbname   = "phone_normalize"
+)
+
+func main() {
+
+}
 
 // Normalizes phone numbers
 // Iterate through string, catching all numerical characters and disposing of extra
